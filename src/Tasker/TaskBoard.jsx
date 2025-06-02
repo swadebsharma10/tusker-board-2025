@@ -19,14 +19,14 @@ const TaskBoard = () => {
   const [showAddModal, setShowAddModal] = useState(false);
 
 
-  const handleAddTask = ()=>{
-     console.log('add task btn clicked');
-     setShowAddModal(true)
+  const handleAddTask = (e, task)=>{
+    e.preventDefault();
+     console.log('Create a Tusk', task)
   }
 
   return (
     <section className="mb-20" id="tasks">
-      {showAddModal && <AddTaskModal></AddTaskModal>}
+      {showAddModal && <AddTaskModal onSave={handleAddTask}></AddTaskModal>}
       <div className="container">
         <div className="p-2 flex justify-end">
           <SearchTask />

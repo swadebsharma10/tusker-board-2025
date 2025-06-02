@@ -1,12 +1,31 @@
-const AddTaskModal = () => {
+import { useState } from "react";
+
+const AddTaskModal = ({onSave}) => {
+
+  const [task, setTask] = useState({
+    title: "",
+    description:"",
+    tags: [],
+    priority: "",
+    isFavorite: false 
+  })
 
 
-  
+  const handleChange = (e)=>{
+    
+    const name = e.target.name;
+    let value = e.target.value;
 
+    if(name === "tags"){
+      value = value.split(",");
+    }
 
+    setTask({
+      ...task,
+      [name]: value
+    })
 
-
-
+  }
 
   return (
     <>
@@ -18,45 +37,53 @@ const AddTaskModal = () => {
 
           <div className="space-y-9 text-white lg:space-y-10">
             <div className="space-y-2 lg:space-y-3">
-              <label for="title">Title</label>
+              <label htmlFor="title">Title</label>
               <input
                 className="block w-full rounded-md bg-[#2D323F] px-3 py-2.5"
                 type="text"
                 name="title"
                 id="title"
+                value={task.title}
+                onChange={handleChange}
                 required
               />
             </div>
 
             <div className="space-y-2 lg:space-y-3">
-              <label for="description">Description</label>
+              <label htmlFor="description">Description</label>
               <textarea
                 className="block min-h-[120px] w-full rounded-md bg-[#2D323F] px-3 py-2.5 lg:min-h-[180px]"
                 type="text"
                 name="description"
                 id="description"
+                value={task.description}
+                onChange={handleChange}
                 required
               ></textarea>
             </div>
 
             <div className="grid-cols-2 gap-x-4 max-md:space-y-9 md:grid lg:gap-x-10 xl:gap-x-20">
               <div className="space-y-2 lg:space-y-3">
-                <label for="tags">Tags</label>
+                <label htmlFor="tags">Tags</label>
                 <input
                   className="block w-full rounded-md bg-[#2D323F] px-3 py-2.5"
                   type="text"
                   name="tags"
                   id="tags"
+                  value={task.tags}
+                onChange={handleChange}
                   required
                 />
               </div>
 
               <div className="space-y-2 lg:space-y-3">
-                <label for="priority">Priority</label>
+                <label htmlFor="priority">Priority</label>
                 <select
                   className="block w-full cursor-pointer rounded-md bg-[#2D323F] px-3 py-2.5"
                   name="priority"
                   id="priority"
+                  value={task.priority}
+                onChange={handleChange}
                   required
                 >
                   <option value="">Select Priority</option>
@@ -71,6 +98,7 @@ const AddTaskModal = () => {
           <div className="mt-16 flex justify-center lg:mt-20">
             <button
               type="submit"
+              onClick={()=>onSave(task)}
               className="rounded bg-blue-600 px-4 py-2 text-white transition-all hover:opacity-80"
             >
               Create new Task
